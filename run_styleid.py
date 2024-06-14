@@ -272,7 +272,7 @@ def main():
                                         pickle.dump(cnt_feat, h)
                                 except Exception as e:
                                     print(e)
-                                    for p in os.path.join(feat_path_root, "*_cnt.pkl"):
+                                    for p in glob.glob(os.path.join(feat_path_root, "*_cnt.pkl")):
                                         os.remove(p)
                                     # sorted(glob.glob(os.path.join(feat_path_root, "*_cnt.pkl")), key=os.path.getctime)
                             if not os.path.isfile(sty_feat_name):
