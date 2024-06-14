@@ -1,4 +1,6 @@
 import argparse, os
+import glob
+
 import torch
 import numpy as np
 from omegaconf import OmegaConf
@@ -265,8 +267,14 @@ def main():
                         if len(feat_path_root) > 0:
                             print("Save features")
                             if not os.path.isfile(cnt_feat_name):
-                                with open(cnt_feat_name, 'wb') as h:
-                                    pickle.dump(cnt_feat, h)
+                                try:
+                                    with open(cnt_feat_name, 'wb') as h:
+                                        pickle.dump(cnt_feat, h)
+                                except Exception as e:
+                                    print(e)
+                                    for p in os.path.join(feat_path_root, "*_cnt.pkl"):
+                                        os.remove(p)
+                                    # sorted(glob.glob(os.path.join(feat_path_root, "*_cnt.pkl")), key=os.path.getctime)
                             if not os.path.isfile(sty_feat_name):
                                 with open(sty_feat_name, 'wb') as h:
                                     pickle.dump(sty_feat, h)
